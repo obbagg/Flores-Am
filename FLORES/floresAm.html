@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flores Amarillas Mejoradas</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #0a0a1a, #000);
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* Estrellas */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle { from {opacity:.2;} to {opacity:1;} }
+
+/* Luciérnagas */
+.firefly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #fff59d, #f1c40f);
+  border-radius: 50%;
+  box-shadow: 0 0 12px #f1c40f;
+  animation: float 6s infinite ease-in-out, glow 2s infinite alternate;
+}
+@keyframes float {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(40px,-60px); }
+  100% { transform: translate(0,0); }
+}
+@keyframes glow { from {opacity:.3;} to {opacity:1;} }
+
+/* TEXTO (más arriba y separado) */
+.message {
+  position: absolute;
+  top: 35%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeIn 2s forwards 2s;
+}
+@keyframes fadeIn { to {opacity:1;} }
+
+/* FLORES MEJORADAS */
+.flowers {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+}
+
+.flower {
+  position: relative;
+  width: 120px;
+  height: 220px;
+}
+
+/* TALLO */
+.stem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 10px;
+  height: 0;
+  background: linear-gradient(#2ecc71,#145a32);
+  transform: translateX(-50%);
+  border-radius: 5px;
+  animation: growStem 2s forwards;
+}
+@keyframes growStem { to {height:160px;} }
+
+/* CENTRO */
+.center {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 35px;
+  height: 35px;
+  background: radial-gradient(circle, #f7dc6f, #b7950b);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0;
+  animation: showCenter 1s forwards 2s;
+}
+@keyframes showCenter { to {opacity:1;} }
+
+/* PÉTALOS BONITOS */
+.petal {
+  position: absolute;
+  width: 40px;
+  height: 80px;
+  background: radial-gradient(circle at top, #fff176, #f1c40f);
+  border-radius: 50%;
+  top: 30px;
+  left: 50%;
+  transform-origin: bottom center;
+  box-shadow: inset 0 -8px 12px rgba(0,0,0,0.25);
+  opacity: 0;
+  animation: bloom 1s forwards;
+}
+@keyframes bloom { to {opacity:1;} }
+
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+<div id="fireflies"></div>
+
+<div class="message">
+ Porque no nos podemos ver<br>
+ te hago este detalle<br>
+</div>
+
+<div class="flowers">
+  <div class="flower"><div class="stem"></div><div class="center"></div></div>
+  <div class="flower"><div class="stem"></div><div class="center"></div></div>
+  <div class="flower"><div class="stem"></div><div class="center"></div></div>
+</div>
+
+<script>
+// estrellas
+const stars = document.getElementById('stars');
+for(let i=0;i<120;i++){
+  let s=document.createElement('div');
+  s.className='star';
+  s.style.top=Math.random()*window.innerHeight+'px';
+  s.style.left=Math.random()*window.innerWidth+'px';
+  stars.appendChild(s);
+}
+
+// luciernagas
+const fireflies=document.getElementById('fireflies');
+for(let i=0;i<20;i++){
+  let f=document.createElement('div');
+  f.className='firefly';
+  f.style.top=Math.random()*window.innerHeight+'px';
+  f.style.left=Math.random()*window.innerWidth+'px';
+  fireflies.appendChild(f);
+}
+
+// pétalos más realistas
+const flowers=document.querySelectorAll('.flower');
+flowers.forEach((flower,index)=>{
+  let total=10;
+  for(let i=0;i<total;i++){
+    let p=document.createElement('div');
+    p.className='petal';
+    let angle=(360/total)*i;
+    p.style.transform=`translate(-50%,-100%) rotate(${angle}deg)`;
+    p.style.animationDelay=(2+i*0.1+index*0.3)+'s';
+    flower.appendChild(p);
+  }
+});
+</script>
+
+</body>
+</html>
